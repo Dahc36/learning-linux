@@ -1,0 +1,10 @@
+version: "3"
+services:
+  web1: 
+    build: apache2
+    ports:
+      - "8001:80"
+  web2: 
+    build: ubuntu
+    ports:
+      - "8002:80"
