@@ -14,6 +14,13 @@ resource "aws_security_group" "terra_sg" {
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
 }
 
 resource "aws_key_pair" "instance_key" {
@@ -53,6 +60,10 @@ resource "aws_instance" "web_server" {
 }
 
 
-output "instance_ip" {
+output "public_ip" {
+  value = aws_instance.web_server.public_ip
+}
+
+output "public_dns" {
   value = aws_instance.web_server.public_ip
 }
