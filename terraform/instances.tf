@@ -1,33 +1,3 @@
-resource "aws_security_group" "terra_sg" {
-  name = "terra-SG"
-
-  ingress {
-    from_port   = 0
-    to_port     = 22
-    protocol    = "tcp"
-    cidr_blocks = ["191.113.116.208/32"]
-  }
-
-  ingress {
-    from_port   = 0
-    to_port     = 80
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
-  egress {
-    from_port   = 0
-    to_port     = 0
-    protocol    = "-1"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-}
-
-resource "aws_key_pair" "instance_key" {
-  key_name   = "terra-key"
-  public_key = file(var.KEY_PUBLIC_PATH)
-}
-
 resource "aws_instance" "web_server" {
   ami               = var.AMI_MAP[var.REGION]
   instance_type     = "t2.micro"
@@ -57,13 +27,4 @@ resource "aws_instance" "web_server" {
       "rm /tmp/web.sh"
     ]
   }
-}
-
-
-output "public_ip" {
-  value = aws_instance.web_server.public_ip
-}
-
-output "public_dns" {
-  value = aws_instance.web_server.public_ip
 }
