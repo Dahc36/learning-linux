@@ -21,7 +21,7 @@ resource "aws_key_pair" "instance_key" {
   public_key = file(var.KEY_PUBLIC_PATH)
 }
 
-resource "aws_instance" "intro" {
+resource "aws_instance" "web_server" {
   ami               = var.AMI_MAP[var.REGION]
   instance_type     = "t2.micro"
   availability_zone = var.A_ZONE_MAP[var.REGION]
@@ -30,6 +30,12 @@ resource "aws_instance" "intro" {
   vpc_security_group_ids = [aws_security_group.terra_sg.id]
   tags = {
     Name = "terraform-instance"
+  }
+
+  connection {
+    private_key = file(var.KEY_PRIVATE_PATH)
+    user        = var.USER
+    host        = self.public_ip
   }
 
   provisioner "file" {
@@ -44,10 +50,9 @@ resource "aws_instance" "intro" {
       "rm /tmp/web.sh"
     ]
   }
+}
 
-  connection {
-    private_key = file(var.KEY_PRIVATE_PATH)
-    user        = var.USER
-    host        = self.public_ip
-  }
+
+output "instance_ip" {
+  value = aws_instance.web_server.public_ip
 }
