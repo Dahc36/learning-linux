@@ -1,4 +1,4 @@
-#! /bin/bash
+#!/bin/bash
 
 # vars
 # $1 e.g. 2124_vertex, 2122_nano_folio, 2120_ben_resume, 2058_metallic_slider
