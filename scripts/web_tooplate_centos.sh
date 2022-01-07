@@ -1,8 +1,12 @@
 #!/bin/bash
 
+
 # vars
 # $1 e.g. 2124_vertex, 2122_nano_folio, 2120_ben_resume, 2058_metallic_slider
 TEMPLATE_DIR=$1
+if [[ -z $TEMPLATE_DIR ]]; then
+  TEMPLATE_DIR="2120_ben_resume"
+fi
 TEMPLATE_URL="https://www.tooplate.com/zip-templates/$TEMPLATE_DIR.zip"
 TEMP_DIR="/tmp/webfiles"
 SERVER_DIR="/var/www/html"
